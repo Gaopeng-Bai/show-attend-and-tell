@@ -42,10 +42,10 @@ def _process_caption_data(caption_file, image_dir, max_length):
             del_idx.append(i)
     
     # delete captions if size is larger than max_length
-    print "The number of captions before deletion: %d" %len(caption_data)
+    print("The number of captions before deletion: %d" %len(caption_data))
     caption_data = caption_data.drop(caption_data.index[del_idx])
     caption_data = caption_data.reset_index(drop=True)
-    print "The number of captions after deletion: %d" %len(caption_data)
+    print("The number of captions after deletion: %d" %len(caption_data))
     return caption_data
 
 
@@ -68,7 +68,7 @@ def _build_vocab(annotations, threshold=1):
     for word in vocab:
         word_to_idx[word] = idx
         idx += 1
-    print "Max length of caption: ", max_len
+    print("Max length of caption: ", max_len)
     return word_to_idx
 
 
@@ -91,7 +91,7 @@ def _build_caption_vector(annotations, word_to_idx, max_length=15):
                 cap_vec.append(word_to_idx['<NULL>']) 
         
         captions[i, :] = np.asarray(cap_vec)
-    print "Finished building caption vectors"
+    print("Finished building caption vectors")
     return captions
 
 
@@ -145,7 +145,7 @@ def main():
     # about 4000 images and 20000 captions for val / test dataset
     val_cutoff = int(0.1 * len(val_dataset))
     test_cutoff = int(0.2 * len(val_dataset))
-    print 'Finished processing caption data'
+    print('Finished processing caption data')
 
     save_pickle(train_dataset, 'data/train/train.annotations.pkl')
     save_pickle(val_dataset[:val_cutoff], 'data/val/val.annotations.pkl')
@@ -178,7 +178,7 @@ def main():
                 feature_to_captions[i] = []
             feature_to_captions[i].append(caption.lower() + ' .')
         save_pickle(feature_to_captions, './data/%s/%s.references.pkl' % (split, split))
-        print "Finished building %s caption dataset" %split
+        print("Finished building %s caption dataset" %split)
 
     # extract conv5_3 feature vectors
     vggnet = Vgg19(vgg_model_path)
